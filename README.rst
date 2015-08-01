@@ -1,13 +1,17 @@
-chimera-template plugin
+chimera_commander plugin
 =======================
 
-This is a template plugin for the chimera observatory control system
+Emerson Control Techniques COMMANDER SK drivers for the chimera observatory control system
 https://github.com/astroufsc/chimera.
 
 Usage
 -----
 
-Rename chimera_template for your plugin name. It is important that the plugin
+This is a Modbus implementation for COMMANDER SK family of Programmable Logical Controllers (PLC)intended to be used
+for remote controlling these devices using TCP/IP.
+
+ It is important
+that the plugin
 name must start with chimera\_ to be found by chimera. Instruments and
 controllers must follow the standard ``chimera_(plugin_name)/(instruments|controllers)/(plugin).py``
 
@@ -23,13 +27,13 @@ Installation instructions. Dependencies, etc...
 
 ::
 
-   pip install -U chimera_template
+   pip install -U chimera_commander
 
 or
 
 ::
 
-    pip install -U git+https://github.com/astroufsc/chimera-template.git
+    pip install -U git+https://github.com/astroufsc/chimera-commander.git
 
 
 Configuration Example
@@ -40,8 +44,10 @@ Here goes an example of the configuration to be added on ``chimera.config`` file
 ::
 
     instrument:
-        name: model
-        type: Example
+        name: Myplc
+        type: commander
+        clp_host: 127.0.0.1 # Host IP
+    	clp_port: 502 # Host port
 
 
 Tested Hardware (for instruments)
@@ -49,9 +55,8 @@ Tested Hardware (for instruments)
 
 This plugin was tested on these hardware:
 
-* Hardware example 1, model 2
-* Hardware example 2, model 3
-
+* Commander SK - SKBD200110	Version 01.09.00
+* SM-Ethernet	Version 02.00.02
 
 Contact
 -------

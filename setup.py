@@ -1,9 +1,9 @@
 from distutils.core import setup
 
 setup(
-    name='chimera_template',
+    name='chimera_commander',
     version='0.0.1',
-    packages=['chimera_template', 'chimera_template.instruments', 'chimera_template.controllers'],
+    packages=['chimera_commander', 'chimera_commander.instruments', 'chimera_commander.controllers'],
     scripts=[],
     url='http://github.com/astroufsc/chimera-template',
     license='GPL v2',
