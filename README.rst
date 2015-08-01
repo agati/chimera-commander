@@ -35,7 +35,7 @@ Here goes an example of the configuration to be added on ``chimera.config`` file
 
     instrument:
         name: Myplc
-        type: commander
+        type: Commander
         clp_host: 127.0.0.1 # Host IP
     	clp_port: 502 # Host port
 
