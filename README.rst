@@ -1,7 +1,7 @@
 chimera_commander plugin
 =======================
 
-Emerson Control Techniques COMMANDER SK drivers for the chimera observatory control system
+Emerson Control Techniques COMMANDER SK driver for the chimera observatory control system
 https://github.com/astroufsc/chimera.
 
 Usage
