@@ -10,17 +10,7 @@ Usage
 This is a Modbus implementation for COMMANDER SK family of Programmable Logical Controllers (PLC)intended to be used
 for remote controlling these devices using TCP/IP.
 
- It is important
-that the plugin
-name must start with chimera\_ to be found by chimera. Instruments and
-controllers must follow the standard ``chimera_(plugin_name)/(instruments|controllers)/(plugin).py``
-
-The class inside ``(plugin).py`` should be named Plugin (with CamelCase letters).
-
-For more info: https://github.com/astroufsc/chimera/blob/master/docs/site/chimerafordevs.rst#chimera-objects
-
-
-Installation
+ Installation
 ------------
 
 Installation instructions. Dependencies, etc...
