@@ -45,7 +45,7 @@ Here goes an example of the configuration to be added on ``chimera.config`` file
 Tested Hardware (for instruments)
 ---------------------------------
 
-This plugin was tested on the folowwing hardware:
+This plugin was tested on the folowing hardware:
 
 * Commander SK - SKBD200110	Version 01.09.00
 * SM-Ethernet	Version 02.00.02
