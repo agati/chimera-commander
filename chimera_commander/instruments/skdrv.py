@@ -346,6 +346,7 @@ class SKDrv(ModbusTcpClient):
 
         print "Error on saving controller data."
         any_key = raw_input("Press [ENTER] to continue...")
+
         return False
 
 
