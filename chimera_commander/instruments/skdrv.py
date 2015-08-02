@@ -17,7 +17,7 @@
 # *******************************************************************
 # This driver is intended to be used with the Emerson Commander SK
 # order number SKBD200110 -  salvadoragati@gmail.com
-# start:15/06/2015 - last update: 30/07/2015
+# start:15/06/2015 - last update: 02/08/2015
 
 
 from pymodbus.client.sync import ModbusTcpClient
