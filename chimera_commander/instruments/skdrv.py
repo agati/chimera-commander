@@ -21,6 +21,8 @@
 
 
 from pymodbus.client.sync import ModbusTcpClient
+import time
+
 
 
 class SKDrv(ModbusTcpClient):
@@ -230,7 +232,7 @@ class SKDrv(ModbusTcpClient):
         """
         read the motor rotation in rpm
         """
-        print"checking rotation..."
+        print"...checking rotation..."
         rotation = self.read_parm('05.04')  # motor speed in rpm
         print "rotation is:", rotation
         if rotation > 0:
@@ -245,10 +247,11 @@ class SKDrv(ModbusTcpClient):
 
     def forward(self):
         """
-        run forward the motor fan indicated by its IP
-        :return:
+        run forward the motor fan
         """
-        print"..forward..."
+        print"..forwarding..."
+
+
         return
 
     def stop(self):
@@ -295,3 +298,56 @@ class SKDrv(ModbusTcpClient):
         """
         print"..treshold..."
         return
+
+
+    def reset(self):
+        """
+        remotely resets the controller
+        """
+        if self.write_parm('10.33', 1):
+            time.sleep(1) # necessary delay to force logical reset level high during 1 second
+            if self.write_parm('10.33', 0):
+                return True
+            else:
+                print "Error setting low level on reset."
+                any_key = raw_input("Press [ENTER] to continue...")
+                return False
+
+        print "Error setting high level on reset."
+        any_key = raw_input("Press [ENTER] to continue...")
+        return False
+
+    def enableCW(self):
+        """
+        enables Control Word Usage
+        """
+        if not self.write_parm('06.43',1):
+            print"Can not write 1 to 6.43 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+        if not self.write_parm('06.42',128):
+            print"Can not write 128 to 6.42 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+        if not self.write_parm('06.42',129):
+            print"Canot write  129 to 6.42 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+
+        return True
+
+    def save(self):
+        if self.write_parm('11.00',1000):
+            if self.reset():
+                return True
+            else:
+                print"Error on doing reset before saving data."
+                any_key = raw_input("Press [ENTER] to continue...")
+
+        print "Error on saving controller data."
+        any_key = raw_input("Press [ENTER] to continue...")
+        return False
+
+
+
+
