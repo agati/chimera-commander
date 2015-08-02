@@ -13,7 +13,8 @@ for remote controlling these devices using TCP/IP.
 Installation
 ------------
 
-To use chimera-commander, you need first install pymodbus, ( https://pypi.python.org/pypi/pymodbus ), a fully featured modbus protocol stack in  python.
+To use chimera-commander, you need first install pymodbus, ( https://pypi.python.org/pypi/pymodbus ),
+a fully featured modbus protocol stack in  python. After that, you can do:
 
 
 ::
