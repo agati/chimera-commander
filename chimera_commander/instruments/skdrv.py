@@ -28,7 +28,8 @@ import time
 class SKDrv(ModbusTcpClient):
     #initial variables setup - This setup is the original setup that was defined at the installation time.
     #It is the same for both Commander SK drives.
-    # If you are planning to change these parameters, see Application Note CTAN#293
+    #If you are planning to change these parameters, see Application Note CTAN#293
+    #At the moment, no chimera object added to the class. It must be checked if as a plugin, it is needed.
 
     ip = ''  #change to the corresponding ip number of your network installed commander SK
     min_speed = ''  #Hz parm1
@@ -37,8 +38,8 @@ class SKDrv(ModbusTcpClient):
     dec_rate = ''  #s/100 Hz parm4
     motor_rated_speed = 0  #rpm parm7 -attention: the ctsoft original parm is 1800 rpm
     motor_rated_voltage = 230  #V parm 8
-    motor_power_factor = ''  # parm 9 it can be changed for the motors's nameplate value if it is known
-    #Its is the motor cos() and 0.5<motor_power_factor<0.97.
+    motor_power_factor = ''  # parm 9 it can be changed for the motor's nameplate value if it is known
+    #It is the motor cos() and 0.5<motor_power_factor<0.97.
     ramp_mode = 2  #  parm 30 Standard Std (2) without dynamic braking resistor, If with this resistor, should set to 0 or
     # Fast
     dynamicVtoF = 'OFF'  # parm 32 - It should not be used when the drive is being used as a soft start to full speed. keep off
@@ -307,13 +308,13 @@ class SKDrv(ModbusTcpClient):
         any_key = raw_input("Press [ENTER] to continue...")
         return
 
-    def treshold(self):
+    def threshold(self):
         """
-        run forward the motor fan if the inner temperature is above a pre-defined treshold value
+        run forward the motor fan if the inner temperature is above a pre-defined threshold value
         value
         :return:
         """
-        print"..treshold..."
+        print"..threshold..."
         any_key = raw_input("Press [ENTER] to continue...")
         return
 
