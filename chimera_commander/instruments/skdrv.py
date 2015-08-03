@@ -29,7 +29,7 @@ class SKDrv(ModbusTcpClient):
     #initial variables setup - This setup is the original setup that was defined at the installation time.
     #It is the same for both Commander SK drives.
     #If you are planning to change these parameters, see Application Note CTAN#293
-    #At the moment, no chimera object added to the class. It must be checked if as a plugin, it is needed.
+    #At the moment, no chimera object added to the class. It must be checked if as a driver, it is needed.
 
     ip = ''  #change to the corresponding ip number of your network installed commander SK
     min_speed = ''  #Hz parm1
