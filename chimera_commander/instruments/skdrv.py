@@ -249,28 +249,43 @@ class SKDrv(ModbusTcpClient):
         """
         run forward the motor fan
         """
-        print"..forwarding..."
+
+        if self.write_parm('06.42' , 131):
+            print"..run forward..."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return True
+        else:
+            print "Can not run forward."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
 
 
-        return
 
     def stop(self):
         """
         stops de motor fan indicated by its IP
-
-        TODO
-        :return:
         """
-        print"..stop..."
-        return
+        if self.write_parm('06.42' , 129):
+            print"..stop..."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return True
+        else:
+            print "Can not stop."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
 
     def reverse(self):
         """
         run reverse the motor fan indicated by its IP
-        :return:
         """
-        print"..reverse..."
-        return
+        if self.write_parm('06.42' , 137):
+            print"..reverse..."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return True
+        else:
+            print "Can not reverse."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
 
     def timer(self):
         """
@@ -279,6 +294,7 @@ class SKDrv(ModbusTcpClient):
         :return:
         """
         print"..set timer..."
+        any_key = raw_input("Press [ENTER] to continue...")
         return
 
     def check_timer(self):
@@ -288,6 +304,7 @@ class SKDrv(ModbusTcpClient):
         :return:
         """
         print"..check timer..."
+        any_key = raw_input("Press [ENTER] to continue...")
         return
 
     def treshold(self):
@@ -297,6 +314,7 @@ class SKDrv(ModbusTcpClient):
         :return:
         """
         print"..treshold..."
+        any_key = raw_input("Press [ENTER] to continue...")
         return
 
 
@@ -330,7 +348,7 @@ class SKDrv(ModbusTcpClient):
             any_key = raw_input("Press [ENTER] to continue...")
             return False
         if not self.write_parm('06.42',129):
-            print"Canot write  129 to 6.42 parm."
+            print"Can not write  129 to 6.42 parm."
             any_key = raw_input("Press [ENTER] to continue...")
             return False
 
@@ -343,6 +361,7 @@ class SKDrv(ModbusTcpClient):
             else:
                 print"Error on doing reset before saving data."
                 any_key = raw_input("Press [ENTER] to continue...")
+                return False
 
         print "Error on saving controller data."
         any_key = raw_input("Press [ENTER] to continue...")
