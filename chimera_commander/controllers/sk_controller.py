@@ -21,6 +21,7 @@
 # # start:15/06/2015 - last update: 19/08/2015                         #                                            #
 #**********************************************************************#
 #The initial menu is configured to manage two controllers:
+#
 #1-IP:192.168.30.104 - Eastern fan system
 #2-IP:192.168.30.105 - Western fan system
 
