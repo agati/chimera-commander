@@ -20,11 +20,11 @@
 # order number SKBD200110 -  salvadoragati@gmail.com                *
 # start:15/06/2015 - last update: 19/08/2015                        *
 #********************************************************************
+#
 
-
-from pymodbus.client.sync import ModbusTcpClient
 import time
 
+from pymodbus.client.sync import ModbusTcpClient
 
 
 class SKDrv(ModbusTcpClient):
