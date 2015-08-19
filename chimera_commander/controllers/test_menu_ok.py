@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2006-2015 chimera - observatory automation system
+# chimera - observatory automation system
+# Copyright (C) 2006-2015  P. Henrique Silva <henrique@astro.ufsc.br>
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -14,10 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
-# *******************************************************************
-# This program is intended to be used with the Emerson Commander SK
-# order number SKBD200110 -  salvadoragati@gmail.com
-# start: 23/07/2015 - last update:30/07/2015
+#**********************************************************************#
+# This program is intended to be used with the Emerson Commander SK    #
+# order number SKBD200110 start: 23/07/2015 - last update:03/0811/2015 #
+#**********************************************************************#
+
 
 
 import os
@@ -57,47 +59,58 @@ def command_menu(ip, sk):
         print "***  Commander SK Command Menu   ******"
         print "***************************************"
         print " ip: ", ip
-        print""
-        print "1-Check rotation"
-        print "2-Run Forward"
-        print "3-Stop"
-        print "4-Run Reverse"
-        print "5-Timer"
-        print "6-Automatic Start by Temperature Threshold"
-        print "7-Controller Menu"
+        print "1-Remote Reset ('10.33', 1) e ('10.33', 0)"
+        print "2-Check Basics "
+        print "3-Check Rotation ('05.04')"
+        print "4-Enable Control Word ('06.43',1), ('06.42',128), ('06.42',129)"
+        print "5-Run Forward ('06.42' , 131)"
+        print "6-Stop ('06.42' , 129)"
+        print "7-Run Reverse ('06.42' , 137)"
+        print "8-Disable Control Word ('06.42',129), ('06.42',128), ('06.43',0)"
+        print "9-Controller Menu"
 
-        action = raw_input("Choice (1/2/3/4/5/6/7):")
+        action = raw_input("Choice (1/2/3/4/5/6/7/8/9):")
         if action == '1':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.check_rotation()
+            sk.reset()
 
         if action == '2':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.forward()
+            sk.check_basic()
 
         if action == '3':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.stop()
+            sk.check_rotation()
 
         if action == '4':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.reverse()
+            sk.enableCW()
 
         if action == '5':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.timer()
+            sk.forward()
 
         if action == '6':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.threshold()
+            sk.stop()
 
         if action == '7':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print " ip: ", ip
+            sk.reverse()
+
+        if action == '8':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print " ip: ", ip
+            sk.disableCW()
+
+        if action == '9':
             return
 
 
@@ -127,7 +140,7 @@ while 1:
                 sk.close()
                 del sk
                 exit()
-
+        print "The controller is well configured. Starting the command menu..."
         #the controller is well configured. Starting the command menu
         command = command_menu(ip, sk)
 
@@ -139,4 +152,6 @@ while 1:
         sk.close()
         del sk
         any_key = raw_input("Press [ENTER] to continue...")
+
+
 

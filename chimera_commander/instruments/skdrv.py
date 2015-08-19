@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-# Copyright (C) 2006-2015 chimera - observatory automation system
+# chimera - observatory automation system
+# Copyright (C) 2006-2015  P. Henrique Silva <henrique@astro.ufsc.br>
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -15,9 +16,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 # *******************************************************************
-# This driver is intended to be used with the Emerson Commander SK
-# order number SKBD200110 -  salvadoragati@gmail.com
-# start:15/06/2015 - last update: 02/08/2015
+# This driver is intended to be used with the Emerson Commander SK  *
+# order number SKBD200110 -  salvadoragati@gmail.com                *
+# start:15/06/2015 - last update: 19/08/2015                        *
+#********************************************************************
 
 
 from pymodbus.client.sync import ModbusTcpClient
@@ -29,7 +31,7 @@ class SKDrv(ModbusTcpClient):
     #initial variables setup - This setup is the original setup that was defined at the installation time.
     #It is the same for both Commander SK drives.
     #If you are planning to change these parameters, see Application Note CTAN#293
-    #At the moment, no chimera object added to the class. It must be checked if as a driver, it is needed.
+    #At the moment, no chimera object added to this class. It must be checked if as a driver, it is needed.
 
     ip = ''  #change to the corresponding ip number of your network installed commander SK
     min_speed = ''  #Hz parm1
@@ -228,10 +230,24 @@ class SKDrv(ModbusTcpClient):
 
         return parm_change
 
+
+
+    def setup(self):
+        """
+        Defines some controller's presets and assures that the minimal remote control parameters are defined.
+        """
+
+        self.write_parm('01.21',10)#preset1= 10 Hz - adjust this to the desired nominal working speed
+        self.write_parm('01.15',1)#presets speed selector to 1
+        self.write_parm('01.14',3)#changes reference selector to preset
+        self.write_parm('06.40',0)#enables sequence latcher=off
+        self.write_parm('06.43',1)#enables control word
+        return True
+
     def check_rotation(self):
 
         """
-        read the motor rotation in rpm
+        reads the motor rotation in rpm
         """
         print"...checking rotation..."
         rotation = self.read_parm('05.04')  # motor speed in rpm
@@ -248,7 +264,7 @@ class SKDrv(ModbusTcpClient):
 
     def forward(self):
         """
-        run forward the motor fan
+        runs the motor fan forward
         """
 
         if self.write_parm('06.42' , 131):
@@ -264,7 +280,7 @@ class SKDrv(ModbusTcpClient):
 
     def stop(self):
         """
-        stops de motor fan indicated by its IP
+        stops de motor fan
         """
         if self.write_parm('06.42' , 129):
             print"..stop..."
@@ -277,7 +293,9 @@ class SKDrv(ModbusTcpClient):
 
     def reverse(self):
         """
-        run reverse the motor fan indicated by its IP
+        run reverses the motor fan
+        obs: It was decided not to run reverse the fan motor. This method is here only for
+        future needs.
         """
         if self.write_parm('06.42' , 137):
             print"..reverse..."
@@ -300,7 +318,7 @@ class SKDrv(ModbusTcpClient):
 
     def check_timer(self):
         """
-        check the timer values
+        checks the timer values
         TODO
         :return:
         """
@@ -310,8 +328,8 @@ class SKDrv(ModbusTcpClient):
 
     def threshold(self):
         """
-        run forward the motor fan if the inner temperature is above a pre-defined threshold value
-        value
+        runs forward the motor fan if the dome inner temperature is above a pre-defined threshold value
+        TODO
         :return:
         """
         print"..threshold..."
@@ -338,7 +356,7 @@ class SKDrv(ModbusTcpClient):
 
     def enableCW(self):
         """
-        enables Control Word Usage
+        enables Control Word usage
         """
         if not self.write_parm('06.43',1):
             print"Can not write 1 to 6.43 parm."
@@ -355,12 +373,40 @@ class SKDrv(ModbusTcpClient):
 
         return True
 
+
+    def disableCW(self):
+        """
+        disables Control Word usage
+        """
+        if not self.write_parm('06.42',129):
+            print"Can not write  129 to 6.42 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+
+        if not self.write_parm('06.42',128):
+            print"Can not write 128 to 6.42 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+
+        if not self.write_parm('06.43',0):
+            print"Can not write 0 to 6.43 parm."
+            any_key = raw_input("Press [ENTER] to continue...")
+            return False
+
+
+        return True
+
+
     def save(self):
+        """
+        saves the data and resets the controller
+        :return:
+        """
         if self.write_parm('11.00',1000):
             if self.reset():
                 return True
             else:
-                print"Error on doing reset before saving data."
+                print"Error on doing reset to save data."
                 any_key = raw_input("Press [ENTER] to continue...")
                 return False
 
@@ -368,7 +414,5 @@ class SKDrv(ModbusTcpClient):
         any_key = raw_input("Press [ENTER] to continue...")
 
         return False
-
-
 
 

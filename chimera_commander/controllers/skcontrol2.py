@@ -17,7 +17,7 @@
 # *******************************************************************
 # This program is intended to be used with the Emerson Commander SK
 # order number SKBD200110 -  salvadoragati@gmail.com
-# start: 23/07/2015 - last update:03/0811/2015
+# start: 23/07/2015 - last update:30/07/2015
 
 
 import os
@@ -63,7 +63,7 @@ def command_menu(ip, sk):
         print "3-Stop"
         print "4-Run Reverse"
         print "5-Timer"
-        print "6-Automatic Start by Temperature Treshold"
+        print "6-Automatic Start by Temperature Threshold"
         print "7-Controller Menu"
 
         action = raw_input("Choice (1/2/3/4/5/6/7):")
@@ -95,7 +95,7 @@ def command_menu(ip, sk):
         if action == '6':
             os.system('cls' if os.name == 'nt' else 'clear')
             print " ip: ", ip
-            sk.treshold()
+            sk.threshold()
 
         if action == '7':
             return
