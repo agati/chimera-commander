@@ -18,7 +18,7 @@
 # processo nº 2015/06983-1 Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP). *
 # As opiniões, hipóteses e # conclusões ou recomendações expressas neste material são    *
 # de responsabilidade do(s) autor(es) e não necessariamente refletem a visão da FAPESP.  *
-#grant #2015/06983-1, São Paulo Research Foundation (FAPESP).                            *
+# grant #2015/06983-1, São Paulo Research Foundation (FAPESP).                            *
 #Opinions, assumptions and conclusions or recommendations expressed in this material are *
 #responsibility of the (s) author (s) and do not necessarily reflect the views of FAPESP.*
 #*****************************************************************************************
@@ -46,7 +46,6 @@ def controller_menu():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     ip = ''
-
 
     print "***************************************"
     print "*** Commander SK Controller Menu ******"
