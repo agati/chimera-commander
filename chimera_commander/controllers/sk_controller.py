@@ -15,18 +15,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 # *****************************************************************************************
-# processo nº 2015/06983-1 Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP). *
-# As opiniões, hipóteses e # conclusões ou recomendações expressas neste material são    *
-# de responsabilidade do(s) autor(es) e não necessariamente refletem a visão da FAPESP.  *
-# grant #2015/06983-1, São Paulo Research Foundation (FAPESP).                            *
-#Opinions, assumptions and conclusions or recommendations expressed in this material are *
-#responsibility of the (s) author (s) and do not necessarily reflect the views of FAPESP.*
+# Salvador Sergi Agati trabalha vinculado ao processo nº 2015/06983-1 Fundação de Amparo *
+# à Pesquisa do Estado de São # Paulo (FAPESP). As opiniões, hipóteses e conclusões ou   *
+# recomendações expressas por ele neste material são de sua responsabilidade e não       *
+# necessariamente refletem a visão da FAPESP.                                            *
+# #grant #2015/06983-1, São Paulo Research Foundation (FAPESP).                          *
+# Opinions, assumptions and conclusions or recommendations expressed in this material by *
+# Salvador Sergi Agati are his responsibility and do not necessarily reflect the views   *
+# of FAPESP.                                                                             *
 #*****************************************************************************************
 # *******************************************************************
 # This driver is intended to be used with the Emerson Commander SK  *
 # order number SKBD200110 -  salvadoragati@gmail.com                *
 # start:15/06/2015 - last update: 19/08/2015                        *
 #********************************************************************
+
 #The initial menu is configured to manage two controllers:
 #
 #1-IP:192.168.30.104 - Eastern fan system
