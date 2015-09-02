@@ -23,7 +23,7 @@
 # Opinions, assumptions and conclusions or recommendations expressed in this material by *
 # Salvador Sergi Agati are his responsibility and do not necessarily reflect the views   *
 # of FAPESP.                                                                             *
-#*****************************************************************************************
+# *****************************************************************************************
 # *******************************************************************
 # This driver is intended to be used with the Emerson Commander SK  *
 # order number SKBD200110 -  salvadoragati@gmail.com                *
