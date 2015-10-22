@@ -19,21 +19,117 @@
 # Opinions, assumptions and conclusions or recommendations       *
 # expressed in this material by Salvador Sergi Agati are his     *
 # responsibility and do not necessarily reflect the              *
-# views of FAPESP.                                               *
+# views of FAPESP.
+# start:11/09/2015 - last update: 07/10/2015                                              *
 # *****************************************************************
+
+import os
 
 from chimera_commander.dome import DomeFan
 from chimera_commander.instruments.skdrv import SKDrv
 
 
 class SKDomeFan(DomeFan, SKDrv):
-    __delta_time__ = '00:00:00'  # 'hh:mm:ss'
-    __local_time__ = '00:00:00'  # 'hh:mm:ss'
-    __start_time__ = '00:00:00'  # 'hh:mm:ss'
-    __end_time__ = '00:00:00'  # 'hh:mm:ss'
-    __elapsed_time__ = '00:00:00'  # 'hh:mm:ss'
-    __temperature_threshold__ = 0.0  # Celsius degrees
+    def controller_menu(self):
 
+
+        """
+        # -choose controller (ip)
+
+        :return: ip
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print "***************************************"
+        print "*** Commander SK Controller Menu ******"
+        print "***************************************"
+
+        print"Choose the controller number :"
+        print""
+        print "1-IP:192.168.30.104 - Eastern"
+        print "2-IP:192.168.30.105 - Western"
+        print "3-Exit"
+        key = raw_input("Choice (1/2/3):")
+        if key == '1':
+            ip = '192.168.30.104'
+            return ip
+        if key == '2':
+            ip = '192.168.30.105'
+            return ip
+        if key == '3':
+            ip = ''
+
+            return ip
+
+    def command_menu(ip, sk):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        while 1:
+            print "***************************************"
+            print "***  Commander SK Command Menu   ******"
+            print "***************************************"
+            print " ip: ", ip
+            print""
+            print "1-Check rotation"
+            print "2-Run Forward"
+            print "3-Stop"
+            print "4-Run Reverse"
+            print "5-Timer"
+            print "6-Automatic Start by Temperature Treshold"
+            print "7-Controller Menu"
+
+            action = raw_input("Choice (1/2/3/4/5/6/7):")
+            if action == '1':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.check_rotation()
+
+            if action == '2':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.forward()
+
+            if action == '3':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.stop()
+
+            if action == '4':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.reverse()
+
+            if action == '5':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.timer()
+
+            if action == '6':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print " ip: ", ip
+                sk.treshold()
+
+            if action == '7':
+                return
+
+    def __init__(self):
+
+        self.__delta_time__ = '00:00:00'  # 'hh:mm:ss'
+        self.__local_time__ = '00:00:00'  # 'hh:mm:ss'
+        self.__start_time__ = '00:00:00'  # 'hh:mm:ss'
+        self.__end_time__ = '00:00:00'  # 'hh:mm:ss'
+        self.__elapsed_time__ = '00:00:00'  # 'hh:mm:ss'
+        self.__temperature_threshold__ = 0.0  # Celsius degrees
+
+        return
+
+    def __start__(self):
+        """
+
+
+
+
+        :return:
+        """
 
     def get_model(self):
         """
@@ -41,7 +137,6 @@ class SKDomeFan(DomeFan, SKDrv):
         """
         model = self.get_order_number()
         return model
-
 
     def get_fan_number(self):
         """
@@ -57,28 +152,19 @@ class SKDomeFan(DomeFan, SKDrv):
         rotation = self.check_rotation()  # rpm
         return rotation
 
-
     def set_frequency(self, frequency):
         """
         Sets the frequency (rotation in rpm) of the fan motor.
         """
 
         if frequency < self.min_speed:
-            self.log.error('Trying to set up a rotation frequency less than the minimum frequency allowed to the ',
-                           self.get_fan_number(), ' fan.')
             return False
         if frequency > self.max_speed:
-            self.log.error('Trying to set up a  rotation frequency above than the maximum frequency allowed to the ',
-                           self.get_fan_number(), ' fan.')
             return False
         if self.write_parm('01.21', frequency):
-            self.log.info('Frequency defined to ', frequency, ' rpm to the ', self.get_fan_number(), ' fan.')
             return True
         else:
-            self.log.error('Could not write the frequency value of ', frequency, ' to the ', self.get_fan_number(),
-                           ' fan.')
             return False
-
 
     def get_timer(self):
         """
@@ -86,7 +172,6 @@ class SKDomeFan(DomeFan, SKDrv):
         returns a list with 2 values: start_time and end_time
         """
         return [self.__start_time__, self.__end_time__]
-
 
     def set_timer(self, timer):
         """
@@ -97,7 +182,6 @@ class SKDomeFan(DomeFan, SKDrv):
         self.__end_time__ = timer[1]
         return True
 
-
     def set_trigger_temp(self, temp):
         """
         Sets a threshold temperature value that turns a fan motor on.
@@ -107,74 +191,75 @@ class SKDomeFan(DomeFan, SKDrv):
         self.__delta_time__ = temp[1]
         return True
 
-
     def is_on(self):
         if self.check_rotation() > 0:
             return True
         else:
             return False
 
-
     def power_on(self):
-        if self.check_basic() and not self.is_on():
-            self.log.info('Basic config is ok and the fan is not running.')
-            if self.enableCW():
-                self.log.info('Drive was enabled to accept remote commands.')
-                if self.forward():
-                    self.log.info('The motor fan run command was sent.')
-                    time.sleep(1)  # waits 1 second before checking that the motor fan is running
-                    if self.is_on():
-                        self.log.info('The ', self.get_fan_number(), ' fan is running forward.')
-                        return True
-                    else:
-                        self.log.error('Error on checking if the ', self.get_fan_number(), ' fan is running forward.')
-                        return False
+        if self.check_basic() and not self.is_on():  # basics ok and no yet on
+            if self.forward():
+                time.sleep(1)  # waits 1 second before checking that the motor fan is running
+                if self.is_on():
+                    return True
                 else:
-                    self.log.error('Error on sending the run forward command to the', self.get_fan_number(), 'fan.')
                     return False
             else:
-                self.log.error('Error on enabling the drive remote control to the', self.get_fan_number(), 'fan.')
                 return False
         else:
-            self.log.error('Error on checking that the basic config is ok or on confirming that the ',
-                           self.get_fan_number(), ' fan is not running.')
             return False
-
-        return False
-
 
     def power_off(self):
 
-        # first verifies that the drive is enable and that the fan is running
-        if self.read_parm('06.43') == 1:
-            self.log.info(self.get_fan_number(), ' fan is able to accept remote commands.')
-            if self.stop():
-                self.log.info('The stop command was sent to the ', self.get_fan_number(), ' fan.')
-                time.sleep(
-                    10)  # waits 10 seconds before to check if the fan is off - Need to verify if time is sufficient
-                if not self.is_on():
-                    self.log.info('The ', self.get_fan_number(), ' fan stopped.')
+        # first verifies that the drive is enable
+        if self.read_parm('06.43') == 1:  # fan is able to accept remote commands
+            if self.stop():  # sent the stop command
+                # time.sleep(2)  # waits 2 seconds before to check if the fan is off
+                if not self.is_on():  # fan stopped.
                     return True
                 else:
-                    self.log.error('Error on checking if the ', self.get_fan_number(), ' fan stopped.')
                     return False
-            else:
-                self.log.error('Error on sending the stop command to the ', self.get_fan_number(), ' fan.')
+            else:  # error on sending the stop command to the fan
                 return False
-        else:
-            self.log.error('Error on checking if the ', self.get_fan_number(), ' fan is enable.')
+        else:  # fan isn't able to accept remote commands
             return False
 
 
-    def remoteCheck(self):
-        """
-        self.log.debug('')
-        self.log.info('')
-        self.log.warning('')
-        self.log.error('')
+    # this is the main loop routine of the Commander SK Control Manager
 
-        return 0
+    while 1:
+        data = 0
+        os.system('cls' if os.name == 'nt' else 'clear')
+        ip = controller_menu()
+        if ip == '': exit()
+        sk = SKDrv()
+        sk.host = ip
 
-        """
+        try:
+            sk.connect()
+
+            # check the basic parameters
+            changes = sk.check_basic()
+            if len(changes) > 0:
+                print "Changes on basic parameters detected!:", changes
+                key = raw_input("Continue anyway? (y/n)")
+                if key != "y":
+                    sk.close()
+                    del sk
+                    exit()
+
+            # the controller is well configured. Starting the command menu
+            command = command_menu(ip, sk)
+
+
+
+
+        except Exception:
+            print"failed to connect to ip:", ip
+            sk.close()
+            del sk
+            any_key = raw_input("Press [ENTER] to continue...")
+
 
 

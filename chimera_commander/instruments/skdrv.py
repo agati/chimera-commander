@@ -25,7 +25,7 @@
 # *******************************************************************
 # This driver is intended to be used with the Emerson Commander SK  *
 # order number SKBD200110 -  salvadoragati@gmail.com                *
-# start:15/06/2015 - last update: 04/09/2015                        *
+# start:15/06/2015 - last update: 07/10/2015                        *
 #********************************************************************
 
 
@@ -229,7 +229,7 @@ class SKDrv(ModbusTcpClient):
 
     def reverse(self):
         """
-        run reverses the motor fan
+        runs reverse the motor fan
 
         """
         if self.write_parm('06.42', 137):  # run reverse
